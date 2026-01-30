@@ -5,6 +5,17 @@ Laboratorio de programación concurrente: condiciones de carrera, sincronizació
 
 ---
 
+👤 **Developers**
+
+- Juan Pablo Caballero
+- Robinson Steven Nuñez
+
+---
+
+Nota: Para el programa de PrimeFinder se establecio en una carpeta ParteI
+
+---
+
 ## Requisitos
 
 - **JDK 21** (Temurin recomendado)
