@@ -5,17 +5,6 @@ Laboratorio de programación concurrente: condiciones de carrera, sincronizació
 
 ---
 
-👤 **Developers**
-
-- Juan Pablo Caballero
-- Robinson Steven Nuñez
-
----
-
-Nota: Para el programa de PrimeFinder se establecio en una carpeta ParteI
-
----
-
 ## Requisitos
 
 - **JDK 21** (Temurin recomendado)
@@ -76,6 +65,10 @@ co.eci.snake
 4. Entrega en el reporte de laboratorio **las observaciones y/o comentarios** explicando tu diseño de sincronización (qué lock, qué condición, cómo evitas _lost wakeups_).
 
 > Objetivo didáctico: practicar suspensión/continuación **sin** espera activa y consolidar el modelo de monitores en Java.
+
+**Solución:**
+
+[Ver en PDF el Desarrollo de la parte I](./docs/ParteI.pdf)
 
 ---
 
