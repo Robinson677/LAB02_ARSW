@@ -7,24 +7,34 @@ Laboratorio de programación concurrente: condiciones de carrera, sincronizació
 
 👤 **Developers**
 
-- Juan Pablo Caballero
-- Robinson Steven Nuñez
+- 👨‍💻 Juan Pablo Caballero
+- 👨‍💻 Robinson Steven Nuñez
 
 ---
 
-Nota: Para el programa de PrimeFinder se establecio en una carpeta ParteI
+📌 Nota: 
+
+Para el programa de PrimeFinder se establecio en una carpeta ParteI
+
+---
+
+## 📑 Content Table
+
+1. [Parte I — (Calentamiento) wait/notify en un programa multi-hilo](#parte-i--calentamiento-waitnotify-en-un-programa-multi-hilo)
+2. [Parte II - SnakeRace concurrente](#parte-ii---snakerace-concurrente)
+
 
 ---
 
 ## Requisitos
 
-- **JDK 21** (Temurin recomendado)
-- **Maven 3.9+**
-- SO: Windows, macOS o Linux
+- ☕ **JDK 21** (Temurin recomendado)
+- 📦 **Maven 3.9+**
+- 💻 SO: Windows, macOS o Linux
 
 ---
 
-## Cómo ejecutar
+## ▶️ Cómo ejecutar
 
 ```bash
 mvn clean verify
@@ -39,18 +49,18 @@ mvn -q -DskipTests exec:java -Dsnakes=4
 
 ---
 
-## Reglas del juego (resumen)
+## 🎮 Reglas del juego (resumen)
 
-- **N serpientes** corren de forma autónoma (cada una en su propio hilo).
-- **Ratones**: al comer uno, la serpiente **crece** y aparece un **nuevo obstáculo**.
-- **Obstáculos**: si la cabeza entra en un obstáculo hay **rebote**.
-- **Teletransportadores** (flechas rojas): entrar por uno te **saca por su par**.
-- **Rayos (Turbo)**: al pisarlos, la serpiente obtiene **velocidad aumentada** temporal.
-- Movimiento con **wrap-around** (el tablero “se repite” en los bordes).
+- 🐍 **N serpientes** corren de forma autónoma (cada una en su propio hilo).
+- 🐭 **Ratones**: al comer uno, la serpiente **crece** y aparece un **nuevo obstáculo**.
+- 🧱 **Obstáculos**: si la cabeza entra en un obstáculo hay **rebote**.
+- 🔁 **Teletransportadores** (flechas rojas): entrar por uno te **saca por su par**.
+- ⚡ **Rayos (Turbo)**: al pisarlos, la serpiente obtiene **velocidad aumentada** temporal.
+- 🌍 Movimiento con **wrap-around** (el tablero “se repite” en los bordes).
 
 ---
 
-## Arquitectura (carpetas)
+## 🏗️ Arquitectura (carpetas)
 
 ```
 co.eci.snake
@@ -63,7 +73,7 @@ co.eci.snake
 
 ---
 
-# Actividades del laboratorio
+#  🧪 Actividades del laboratorio
 
 ## Parte I — (Calentamiento) `wait/notify` en un programa multi-hilo
 
@@ -75,11 +85,11 @@ co.eci.snake
 3. La sincronización debe usar **`synchronized`**, **`wait()`**, **`notify()` / `notifyAll()`** sobre el **mismo monitor** (sin _busy-waiting_).
 4. Entrega en el reporte de laboratorio **las observaciones y/o comentarios** explicando tu diseño de sincronización (qué lock, qué condición, cómo evitas _lost wakeups_).
 
-> Objetivo didáctico: practicar suspensión/continuación **sin** espera activa y consolidar el modelo de monitores en Java.
+> 🎯 Objetivo didáctico: practicar suspensión/continuación **sin** espera activa y consolidar el modelo de monitores en Java.
 
 ---
 
-## Parte II — SnakeRace concurrente (núcleo del laboratorio)
+## Parte II - SnakeRace concurrente
 
 ### 1) Análisis de concurrencia
 
@@ -113,19 +123,19 @@ co.eci.snake
 
 ---
 
-## Entregables
+## 📦 Entregables
 
-1. **Código fuente** funcionando en **Java 21**.
-2. Todo de manera clara en **`**el reporte de laboratorio**`** con:
+1. 💻 **Código fuente** funcionando en **Java 21**.
+2. 📄 Todo de manera clara en **`**el reporte de laboratorio**`** con:
    - Data races encontradas y su solución.
    - Colecciones mal usadas y cómo se protegieron (o sustituyeron).
    - Esperas activas eliminadas y mecanismo utilizado.
    - Regiones críticas definidas y justificación de su **alcance mínimo**.
-3. UI con **Iniciar / Pausar / Reanudar** y estadísticas solicitadas al pausar.
+3. 🖥️ UI con **Iniciar / Pausar / Reanudar** y estadísticas solicitadas al pausar.
 
 ---
 
-## Criterios de evaluación (10)
+## 📝 Criterios de evaluación (10)
 
 - (3) **Concurrencia correcta**: sin data races; sincronización bien localizada.
 - (2) **Pausa/Reanudar**: consistencia visual y de estado.
@@ -135,7 +145,7 @@ co.eci.snake
 
 ---
 
-## Tips y configuración útil
+## 💡 Tips y configuración útil
 
 - **Número de serpientes**: `-Dsnakes=N` al ejecutar.
 - **Tamaño del tablero**: cambiar el constructor `new Board(width, height)`.
@@ -144,7 +154,7 @@ co.eci.snake
 
 ---
 
-## Cómo correr pruebas
+## 🧪 Cómo correr pruebas
 
 ```bash
 mvn clean verify
@@ -154,7 +164,7 @@ Incluye compilación y ejecución de pruebas JUnit. Si tienes análisis estátic
 
 ---
 
-## Créditos
+## 🙌 Créditos
 
 Este laboratorio es una adaptación modernizada del ejercicio **SnakeRace** de ARSW. El enunciado de actividades se conserva para mantener los objetivos pedagógicos del curso.
 
