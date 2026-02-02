@@ -6,6 +6,7 @@ import co.eci.snake.core.Direction;
 import co.eci.snake.core.Position;
 import co.eci.snake.core.Snake;
 import co.eci.snake.core.engine.GameClock;
+import co.eci.snake.core.PauseController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public final class SnakeApp extends JFrame {
   private final JButton actionButton;
   private final GameClock clock;
   private final java.util.List<Snake> snakes = new java.util.ArrayList<>();
+  private final PauseController pauseController = new PauseController();
 
   public SnakeApp() {
     super("The Snake Race");
@@ -47,8 +49,10 @@ public final class SnakeApp extends JFrame {
 
     this.clock = new GameClock(60, () -> SwingUtilities.invokeLater(gamePanel::repaint));
 
+    pauseController.setTotalRunners(snakes.size());
+
     var exec = Executors.newVirtualThreadPerTaskExecutor();
-    snakes.forEach(s -> exec.submit(new SnakeRunner(s, board)));
+    snakes.forEach(s -> exec.submit(new SnakeRunner(s, board, pauseController)));
 
     actionButton.addActionListener((ActionEvent e) -> togglePause());
 
@@ -130,12 +134,66 @@ public final class SnakeApp extends JFrame {
 
   private void togglePause() {
     if ("Action".equals(actionButton.getText())) {
-      actionButton.setText("Resume");
-      clock.pause();
+      actionButton.setEnabled(false);
+      new Thread(() -> {
+        pauseController.pause();
+        try {
+          pauseController.waitForAllPaused();
+        } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+        var longest = computeLongestAliveSnake();
+        var worst = computeFirstDiedSnake(); 
+        SwingUtilities.invokeLater(() -> {
+          clock.pause();
+          String msg = "Serpiente viva más larga: " + (longest != null ? formatSnakeInfo(longest) : "N/A")
+                     + "\nPeor y primera serpiente muerta: " + (worst != null ? formatSnakeInfo(worst) : "N/A");
+          JOptionPane.showMessageDialog(this, msg, "Estadísticas en pausa", JOptionPane.INFORMATION_MESSAGE);
+
+          actionButton.setText("Resume");
+          actionButton.setEnabled(true);
+        });
+      }, "pause-coordinator").start();
+
     } else {
-      actionButton.setText("Action");
+      pauseController.resume();
       clock.resume();
+      actionButton.setText("Action");
     }
+  }
+
+    private String formatSnakeInfo(Snake s) {
+    var body = s.snapshot();
+    return "Longitud=" + body.size() + (s.isAlive() ? " se encuentra viva" : " murio en: " + s.getDeathTime() + " ms");
+  }
+
+
+  private Snake computeLongestAliveSnake() {
+    Snake best = null;
+    int bestLen = -1;
+    for (Snake s : snakes) {
+      if (!s.isAlive()) continue;
+      int len = s.snapshot().size();
+      if (len > bestLen) {
+        bestLen = len;
+        best = s;
+      }
+    }
+    return best;
+  }
+
+
+  private Snake computeFirstDiedSnake() {
+    Snake worst = null;
+    long minDeath = Long.MAX_VALUE;
+    for (Snake s : snakes) {
+      long dt = s.getDeathTime();
+      if (dt > 0 && dt < minDeath) {
+        minDeath = dt;
+        worst = s;
+      }
+    }
+    return worst;
   }
 
   public static final class GamePanel extends JPanel {
