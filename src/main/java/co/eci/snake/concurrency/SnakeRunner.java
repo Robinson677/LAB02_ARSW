@@ -11,8 +11,8 @@ public final class SnakeRunner implements Runnable {
   private final Snake snake;
   private final Board board;
   private final PauseController pauseController;
-  private final int baseSleepMs = 80;
-  private final int turboSleepMs = 40;
+  private final int baseSleepMs = 20;
+  private final int turboSleepMs = 10;
   private int turboTicks = 0;
 
   public SnakeRunner(Snake snake, Board board, PauseController pauseController) {
